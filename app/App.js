@@ -43,11 +43,26 @@ var App = React.createClass({
     }
   },
   handleUpdate: function (e) {
-    this.setState({
-      red: e.target.value,
-      green: ReactDOM.findDOMNode(this.refs.green).value,
-      blue: ReactDOM.findDOMNode(this.refs.blue).value
-    })
+    let redRange = ReactDOM.findDOMNode(this.refs.red.refs.range).value
+    let redNum = ReactDOM.findDOMNode(this.refs.red.refs.number).value
+
+    redRange === this.state.red ? 
+      this.setState({ red: redNum }) 
+      : this.setState({red: redRange})
+
+    let greenRange = ReactDOM.findDOMNode(this.refs.green.refs.range).value
+    let greenNum = ReactDOM.findDOMNode(this.refs.green.refs.number).value
+
+    greenRange === this.state.green ? 
+      this.setState({ green: greenNum }) 
+      : this.setState({green: greenRange})
+
+    let blueRange = ReactDOM.findDOMNode(this.refs.blue.refs.range).value
+    let blueNum = ReactDOM.findDOMNode(this.refs.blue.refs.number).value
+
+    blueRange === this.state.blue? 
+      this.setState({blue: blueNum }) 
+      : this.setState({blue: blueRange})
   },
   render: function () {
     var styles = {
@@ -64,9 +79,15 @@ var App = React.createClass({
               onUpdate={this.handleUpdate}
               currentValue={this.state.red} />
             Red
-            <ColorInput ref='green' onUpdate={this.handleUpdate} inputType='range' />
+            <ColorInputGroup 
+              ref='green'
+              onUpdate={this.handleUpdate}
+              currentValue={this.state.green} />
             Green
-            <ColorInput ref='blue' onUpdate={this.handleUpdate} inputType='range' />
+            <ColorInputGroup 
+              ref='blue'
+              onUpdate={this.handleUpdate}
+              currentValue={this.state.blue} />
             Blue
             </div>
         </div>
