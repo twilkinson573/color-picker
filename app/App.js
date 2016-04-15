@@ -37,7 +37,8 @@ var App = React.createClass({
   render: function () {
     var styles = {
       backgroundColor: 'rgb(' + this.state.red + ',' + this.state.green + ',' + this.state.blue + ')',
-      antiBackground: 'rgb(' + (255-this.state.red) + ',' + (255-this.state.green) + ',' + (255-this.state.blue) + ')'
+      complementColor1: 'rgb(' + (255-this.state.red-31) + ',' + (255-this.state.green-31) + ',' + (255-this.state.blue-31) + ')',
+      complementColor2: 'rgb(' + (255-this.state.red+31) + ',' + (255-this.state.green+31) + ',' + (255-this.state.blue+31) + ')'
     }
     return (
       <div className='container'>
@@ -63,13 +64,16 @@ var App = React.createClass({
           </div>
           <div className='row'>
             <div className='col-sm-2 col-sm-offset-2'>
+              Primary
               <ColorBlock color={styles.backgroundColor}/>
             </div>
             <div className='col-sm-2 col-sm-offset-1'>
-              <ColorBlock color={styles.antiBackground}/>
+              Complement 1
+              <ColorBlock color={styles.complementColor1}/>
             </div>
             <div className='col-sm-2 col-sm-offset-1'>
-              <ColorBlock color={styles.backgroundColor}/>
+              Complement 2
+              <ColorBlock color={styles.complementColor2}/>
             </div>
           </div>
         </div>
