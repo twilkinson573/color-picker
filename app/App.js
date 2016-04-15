@@ -36,7 +36,8 @@ var App = React.createClass({
   },
   render: function () {
     var styles = {
-      'backgroundColor': 'rgb(' + this.state.red + ',' + this.state.green + ',' + this.state.blue + ')'
+      backgroundColor: 'rgb(' + this.state.red + ',' + this.state.green + ',' + this.state.blue + ')',
+      antiBackground: 'rgb(' + (255-this.state.red) + ',' + (255-this.state.green) + ',' + (255-this.state.blue) + ')'
     }
     return (
       <div className='container'>
@@ -65,7 +66,7 @@ var App = React.createClass({
               <ColorBlock color={styles.backgroundColor}/>
             </div>
             <div className='col-sm-2 col-sm-offset-1'>
-              <ColorBlock color={styles.backgroundColor}/>
+              <ColorBlock color={styles.antiBackground}/>
             </div>
             <div className='col-sm-2 col-sm-offset-1'>
               <ColorBlock color={styles.backgroundColor}/>
