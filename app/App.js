@@ -1,38 +1,8 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var ColorInput = React.createClass({
-  render: function () {
-    return (
-    <input 
-      type={this.props.inputType}
-      min='0'
-      max='255'
-      onChange={this.props.onUpdate}
-      defaultValue={this.props.colorValue}
-      value={this.props.colorValue} />
-    )
-  } 
-});
-
-var ColorInputGroup = React.createClass({
-  render: function () {
-    return (
-      <div>
-        <ColorInput 
-          ref='range' 
-          onUpdate={this.props.onUpdate} 
-          inputType='range'
-          colorValue={this.props.currentValue}/>
-        <ColorInput 
-          ref='number' 
-          onUpdate={this.props.onUpdate} 
-          inputType='number'
-          colorValue={this.props.currentValue}/>
-      </div>
-    )
-  }
-});
+var ColorInputGroup = require('./components/ColorInputGroup');
+var ColorBlock = require('./components/ColorBlock');
 
 var App = React.createClass({
   getInitialState: function (){
@@ -47,29 +17,29 @@ var App = React.createClass({
     let redNum = ReactDOM.findDOMNode(this.refs.red.refs.number).value
 
     redRange === this.state.red ? 
-      this.setState({ red: redNum }) 
-      : this.setState({red: redRange})
+      this.setState({ red: +redNum }) 
+      : this.setState({red: +redRange})
 
     let greenRange = ReactDOM.findDOMNode(this.refs.green.refs.range).value
     let greenNum = ReactDOM.findDOMNode(this.refs.green.refs.number).value
 
     greenRange === this.state.green ? 
-      this.setState({ green: greenNum }) 
-      : this.setState({green: greenRange})
+      this.setState({ green: +greenNum }) 
+      : this.setState({green: +greenRange})
 
     let blueRange = ReactDOM.findDOMNode(this.refs.blue.refs.range).value
     let blueNum = ReactDOM.findDOMNode(this.refs.blue.refs.number).value
 
     blueRange === this.state.blue? 
-      this.setState({blue: blueNum }) 
-      : this.setState({blue: blueRange})
+      this.setState({blue: +blueNum }) 
+      : this.setState({blue: +blueRange})
   },
   render: function () {
     var styles = {
       'backgroundColor': 'rgb(' + this.state.red + ',' + this.state.green + ',' + this.state.blue + ')'
     }
     return (
-      <div className='container' style={styles}>
+      <div className='container'>
         <h1>Color Picker</h1>
         <br />
         <div className='row'>
@@ -89,7 +59,18 @@ var App = React.createClass({
               onUpdate={this.handleUpdate}
               currentValue={this.state.blue} />
             Blue
+          </div>
+          <div className='row'>
+            <div className='col-sm-2 col-sm-offset-2'>
+              <ColorBlock color={styles.backgroundColor}/>
             </div>
+            <div className='col-sm-2 col-sm-offset-1'>
+              <ColorBlock color={styles.backgroundColor}/>
+            </div>
+            <div className='col-sm-2 col-sm-offset-1'>
+              <ColorBlock color={styles.backgroundColor}/>
+            </div>
+          </div>
         </div>
       </div>
     )
