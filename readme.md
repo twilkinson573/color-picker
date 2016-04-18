@@ -1,6 +1,6 @@
 Colour Picker
 ========
-A little tool to help people pick colours that actually work well together.
+A little tool to help people pick colours that actually work well together, built with React.
 
 ### TODO
 
