@@ -13,26 +13,26 @@ var App = React.createClass({
     }
   },
   handleUpdate: function (e) {
-    let redRange = ReactDOM.findDOMNode(this.refs.red.refs.range).value
-    let redNum = ReactDOM.findDOMNode(this.refs.red.refs.number).value
+    var redRange = +ReactDOM.findDOMNode(this.refs.red.refs.range).value
+    var redNum = +ReactDOM.findDOMNode(this.refs.red.refs.number).value
 
     redRange === this.state.red ? 
-      this.setState({ red: +redNum }) 
-      : this.setState({red: +redRange})
+      this.setState({ red: redNum }) 
+      : this.setState({red: redRange})
 
-    let greenRange = ReactDOM.findDOMNode(this.refs.green.refs.range).value
-    let greenNum = ReactDOM.findDOMNode(this.refs.green.refs.number).value
+    let greenRange = +ReactDOM.findDOMNode(this.refs.green.refs.range).value
+    let greenNum = +ReactDOM.findDOMNode(this.refs.green.refs.number).value
 
     greenRange === this.state.green ? 
-      this.setState({ green: +greenNum }) 
-      : this.setState({green: +greenRange})
+      this.setState({ green: greenNum }) 
+      : this.setState({green: greenRange})
 
-    let blueRange = ReactDOM.findDOMNode(this.refs.blue.refs.range).value
-    let blueNum = ReactDOM.findDOMNode(this.refs.blue.refs.number).value
+    let blueRange = +ReactDOM.findDOMNode(this.refs.blue.refs.range).value
+    let blueNum = +ReactDOM.findDOMNode(this.refs.blue.refs.number).value
 
     blueRange === this.state.blue? 
-      this.setState({blue: +blueNum }) 
-      : this.setState({blue: +blueRange})
+      this.setState({blue: blueNum }) 
+      : this.setState({blue: blueRange})
   },
   render: function () {
     var styles = {
