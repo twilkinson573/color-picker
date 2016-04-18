@@ -51,6 +51,8 @@
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
 	var React = __webpack_require__(2);
 	var ReactDOM = __webpack_require__(159);
 
@@ -20016,43 +20018,46 @@
 /* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
 	var React = __webpack_require__(2);
 	var ReactDOM = __webpack_require__(159);
 
 	var ColorInputGroup = __webpack_require__(165);
 	var ColorBlock = __webpack_require__(167);
+	var colorHelpers = __webpack_require__(168);
 
 	var App = React.createClass({
 	  displayName: 'App',
 
-	  getInitialState: function () {
+	  getInitialState: function getInitialState() {
 	    return {
 	      red: 128,
 	      green: 128,
 	      blue: 128
 	    };
 	  },
-	  handleUpdate: function (e) {
+	  handleUpdate: function handleUpdate(e) {
 	    var redRange = +ReactDOM.findDOMNode(this.refs.red.refs.range).value;
 	    var redNum = +ReactDOM.findDOMNode(this.refs.red.refs.number).value;
 
 	    redRange === this.state.red ? this.setState({ red: redNum }) : this.setState({ red: redRange });
 
-	    let greenRange = +ReactDOM.findDOMNode(this.refs.green.refs.range).value;
-	    let greenNum = +ReactDOM.findDOMNode(this.refs.green.refs.number).value;
+	    var greenRange = +ReactDOM.findDOMNode(this.refs.green.refs.range).value;
+	    var greenNum = +ReactDOM.findDOMNode(this.refs.green.refs.number).value;
 
 	    greenRange === this.state.green ? this.setState({ green: greenNum }) : this.setState({ green: greenRange });
 
-	    let blueRange = +ReactDOM.findDOMNode(this.refs.blue.refs.range).value;
-	    let blueNum = +ReactDOM.findDOMNode(this.refs.blue.refs.number).value;
+	    var blueRange = +ReactDOM.findDOMNode(this.refs.blue.refs.range).value;
+	    var blueNum = +ReactDOM.findDOMNode(this.refs.blue.refs.number).value;
 
 	    blueRange === this.state.blue ? this.setState({ blue: blueNum }) : this.setState({ blue: blueRange });
 	  },
-	  render: function () {
+	  render: function render() {
 	    var styles = {
-	      backgroundColor: 'rgb(' + this.state.red + ',' + this.state.green + ',' + this.state.blue + ')',
-	      complementColor1: 'rgb(' + (255 - this.state.red - 31) + ',' + (255 - this.state.green - 31) + ',' + (255 - this.state.blue - 31) + ')',
-	      complementColor2: 'rgb(' + (255 - this.state.red + 31) + ',' + (255 - this.state.green + 31) + ',' + (255 - this.state.blue + 31) + ')'
+	      backgroundColor: colorHelpers.buildRGB(this.state.red, this.state.green, this.state.blue),
+	      complementColor1: colorHelpers.buildRGB(255 - this.state.red, 255 - this.state.green, 255 - this.state.blue, -31),
+	      complementColor2: colorHelpers.buildRGB(255 - this.state.red, 255 - this.state.green, 255 - this.state.blue, 31)
 	    };
 	    return React.createElement(
 	      'div',
@@ -20092,18 +20097,36 @@
 	            'div',
 	            { className: 'col-sm-2 col-sm-offset-2' },
 	            'Primary',
+	            React.createElement('br', null),
+	            React.createElement(
+	              'b',
+	              null,
+	              colorHelpers.buildHex(this.state.red, this.state.green, this.state.blue)
+	            ),
 	            React.createElement(ColorBlock, { color: styles.backgroundColor })
 	          ),
 	          React.createElement(
 	            'div',
 	            { className: 'col-sm-2 col-sm-offset-1' },
 	            'Complement 1',
+	            React.createElement('br', null),
+	            React.createElement(
+	              'b',
+	              null,
+	              colorHelpers.buildHex(255 - this.state.red, 255 - this.state.green, this.state.blue, -31)
+	            ),
 	            React.createElement(ColorBlock, { color: styles.complementColor1 })
 	          ),
 	          React.createElement(
 	            'div',
 	            { className: 'col-sm-2 col-sm-offset-1' },
 	            'Complement 2',
+	            React.createElement('br', null),
+	            React.createElement(
+	              'b',
+	              null,
+	              colorHelpers.buildHex(255 - this.state.red, 255 - this.state.green, 255 - this.state.blue, 31)
+	            ),
 	            React.createElement(ColorBlock, { color: styles.complementColor2 })
 	          )
 	        )
@@ -20118,6 +20141,8 @@
 /* 165 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
 	var React = __webpack_require__(2);
 	var PropTypes = React.PropTypes;
 
@@ -20130,7 +20155,7 @@
 	    currentValue: PropTypes.number,
 	    onUpdate: PropTypes.func
 	  },
-	  render: function () {
+	  render: function render() {
 	    return React.createElement(
 	      'div',
 	      null,
@@ -20154,13 +20179,15 @@
 /* 166 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
 	var React = __webpack_require__(2);
 	var propTypes = React.PropTypes;
 
 	var ColorInput = React.createClass({
 	  displayName: 'ColorInput',
 
-	  render: function () {
+	  render: function render() {
 	    return React.createElement('input', {
 	      type: this.props.inputType,
 	      min: '0',
@@ -20177,6 +20204,8 @@
 /* 167 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
 	var React = __webpack_require__(2);
 
 	function ColorBlock(props) {
@@ -20189,6 +20218,31 @@
 	}
 
 	module.exports = ColorBlock;
+
+/***/ },
+/* 168 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	var colorHelpers = {
+	  buildRGB: function buildRGB(red, green, blue) {
+	    var diff = arguments.length <= 3 || arguments[3] === undefined ? 0 : arguments[3];
+
+	    return "rgb(" + (red + diff) + "," + (green + diff) + "," + (blue + diff) + ")";
+	  },
+	  buildHex: function buildHex(red, green, blue) {
+	    var diff = arguments.length <= 3 || arguments[3] === undefined ? 0 : arguments[3];
+
+	    // Build individual padded hex strings for each color
+	    var redHex = ("00" + (red + diff).toString(16)).substr(-2);
+	    var greenHex = ("00" + (green + diff).toString(16)).substr(-2);
+	    var blueHex = ("00" + (blue + diff).toString(16)).substr(-2);
+	    return '#' + redHex + greenHex + blueHex;
+	  }
+	};
+
+	module.exports = colorHelpers;
 
 /***/ }
 /******/ ]);
