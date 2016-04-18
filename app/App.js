@@ -3,6 +3,7 @@ var ReactDOM = require('react-dom');
 
 var ColorInputGroup = require('./components/ColorInputGroup');
 var ColorBlock = require('./components/ColorBlock');
+var colorHelpers = require('./utils/colorHelpers');
 
 var App = React.createClass({
   getInitialState: function (){
@@ -30,15 +31,15 @@ var App = React.createClass({
     let blueRange = +ReactDOM.findDOMNode(this.refs.blue.refs.range).value
     let blueNum = +ReactDOM.findDOMNode(this.refs.blue.refs.number).value
 
-    blueRange === this.state.blue? 
+    blueRange === this.state.blue ? 
       this.setState({blue: blueNum }) 
       : this.setState({blue: blueRange})
   },
   render: function () {
     var styles = {
-      backgroundColor: 'rgb(' + this.state.red + ',' + this.state.green + ',' + this.state.blue + ')',
-      complementColor1: 'rgb(' + (255-this.state.red-31) + ',' + (255-this.state.green-31) + ',' + (255-this.state.blue-31) + ')',
-      complementColor2: 'rgb(' + (255-this.state.red+31) + ',' + (255-this.state.green+31) + ',' + (255-this.state.blue+31) + ')'
+      backgroundColor: colorHelpers.buildRGB(this.state.red,this.state.green,this.state.blue),
+      complementColor1: colorHelpers.buildRGB(255-this.state.red,255-this.state.green,255-this.state.blue,-31),
+      complementColor2: colorHelpers.buildRGB(255-this.state.red,255-this.state.green,255-this.state.blue,31)
     }
     return (
       <div className='container'>
@@ -65,14 +66,20 @@ var App = React.createClass({
           <div className='row'>
             <div className='col-sm-2 col-sm-offset-2'>
               Primary
+              <br/>
+              <b>{colorHelpers.buildHex(this.state.red,this.state.green,this.state.blue)}</b>
               <ColorBlock color={styles.backgroundColor}/>
             </div>
             <div className='col-sm-2 col-sm-offset-1'>
               Complement 1
+              <br/>
+              <b>{colorHelpers.buildHex(255-this.state.red,255-this.state.green,this.state.blue,-31)}</b>
               <ColorBlock color={styles.complementColor1}/>
             </div>
             <div className='col-sm-2 col-sm-offset-1'>
               Complement 2
+              <br/>
+              <b>{colorHelpers.buildHex(255-this.state.red,255-this.state.green,255-this.state.blue,31)}</b>
               <ColorBlock color={styles.complementColor2}/>
             </div>
           </div>
